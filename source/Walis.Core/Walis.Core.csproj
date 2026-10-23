@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <!-- A RID-specific publish of the API or runner restores this project for that RID too, so its lock file must carry
+             the same platforms or the locked-mode restore fails with NU1004. -->
+        <RuntimeIdentifiers>$(WalisReleaseRuntimeIdentifiers)</RuntimeIdentifiers>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper" Version="2.1.79"/>
+        <PackageReference Include="Jint" Version="4.16.1"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2"/>
+        <!-- Pinned above the vulnerable transitive version pulled in by Microsoft.Data.SqlClient (GHSA-846f-f764-76mx). -->
+        <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13"/>
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.13"/>
+        <!-- The native SQLite build is pinned separately from Microsoft.Data.Sqlite. 2.1.14 carries SQLite 3.54.0, whose 32-bit heap overflow (fixed in 3.54.1) would reach the linux-arm build; 2.1.13 still carries 3.53.3 and satisfies Microsoft.Data.Sqlite 10.0.13; move on once a 3.54.1 bundle exists. -->
+        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.13"/>
+        <PackageReference Include="MySqlConnector" Version="2.6.2"/>
+        <PackageReference Include="Npgsql" Version="10.0.3"/>
+    </ItemGroup>
+
+</Project>

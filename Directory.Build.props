@@ -1,0 +1,19 @@
+<Project>
+
+    <!-- Supply-chain settings shared by every project in the solution.
+         - packages.lock.json pins the whole dependency graph (transitive packages included); deploy/release.sh restores in
+           locked mode so a release never silently picks up a different graph than the one committed.
+         - NuGetAudit makes restore report known advisories (GitHub Advisory Database via nuget.org) for direct and transitive packages;
+           internal/check-dependencies.sh fails a release on HIGH/CRITICAL. -->
+    <PropertyGroup>
+        <!-- Every platform deploy/release.sh publishes (keep ALL_TARGETS there in sync). The publishable projects list these as
+             RuntimeIdentifiers so the lock files carry each platform's graph: a locked-mode restore for a RID that is not in the
+             lock file fails with NU1004. -->
+        <WalisReleaseRuntimeIdentifiers>win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm64;linux-arm;linux-musl-x64;linux-musl-arm64</WalisReleaseRuntimeIdentifiers>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <NuGetAudit>true</NuGetAudit>
+        <NuGetAuditMode>all</NuGetAuditMode>
+        <NuGetAuditLevel>low</NuGetAuditLevel>
+    </PropertyGroup>
+
+</Project>

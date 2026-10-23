@@ -1,0 +1,13 @@
+{
+  "id": "example.hello",
+  "name": "打招呼",
+  "description": "示範用：把一句話印進建置日誌，不需要任何工具。",
+  "category": "general",
+  "icon": "cil-list-rich",
+  "version": "1.0.0",
+  "author": "Walis",
+  "parameters": [
+    { "name": "who", "label": "對象", "type": "text", "required": true, "default": "world", "placeholder": "world" }
+  ],
+  "template": "echo \"hello, \"{{who}}"
+}

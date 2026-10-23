@@ -1,0 +1,51 @@
+{
+  "id": "example.wait-for-port",
+  "name": "等待連接埠開啟",
+  "description": "示範用：每秒用 nc 探測一次主機連接埠，直到連上或逾時；執行器要有 nc。",
+  "category": "check",
+  "icon": "cil-av-timer",
+  "version": "1.0.0",
+  "author": "Walis",
+  "parameters": [
+    {
+      "name": "host",
+      "label": "主機",
+      "type": "text",
+      "required": true,
+      "default": "127.0.0.1",
+      "placeholder": "127.0.0.1"
+    },
+    {
+      "name": "port",
+      "label": "連接埠",
+      "type": "number",
+      "required": true,
+      "default": "8080"
+    },
+    {
+      "name": "timeout",
+      "label": "最多等幾秒",
+      "type": "number",
+      "default": "60"
+    },
+    {
+      "name": "udp",
+      "label": "用 UDP 探測",
+      "type": "boolean",
+      "default": "false"
+    },
+    {
+      "name": "failFast",
+      "label": "逾時就讓建置失敗",
+      "type": "boolean",
+      "default": "true"
+    }
+  ],
+  "template": "i=0\nwhile [ \"$i\" -lt {{{timeout}}} ]; do\n  if nc -z {{#if udp}}-u{{/if}} {{host}} {{{port}}} 2>/dev/null; then echo \"ready\"; echo \"waited=$i\" >> \"$WALIS_OUTPUT_FILE\"; exit 0; fi\n  i=$((i + 1)); sleep 1\ndone\necho \"timeout\"\n{{#if failFast}}exit 1{{/if}}",
+  "outputs": [
+    {
+      "name": "waited",
+      "description": "連上之前等了幾秒。"
+    }
+  ]
+}

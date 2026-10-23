@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <!-- The major.minor version is changed by hand; the third number is filled in at build time from the git commit count (see WalisSourceRevision). -->
+        <VersionPrefix>1.1</VersionPrefix>
+        <RuntimeIdentifiers>$(WalisReleaseRuntimeIdentifiers)</RuntimeIdentifiers>
+    </PropertyGroup>
+
+    <!-- The version is decided by git at build time: the third number is the commit count and the short commit follows the plus sign (1.0.87+b686f87),
+         so every commit bumps the version automatically and only the major.minor VersionPrefix needs a manual change.
+         WalisVersion reads it for /, MCP and the UI footer. Without git or outside a repo it falls back to VersionPrefix.0.
+         Note that a shallow clone undercounts commits, so deployment scripts must use a full clone. -->
+    <Target Name="WalisSourceRevision" BeforeTargets="GetAssemblyVersion" Condition="'$(SourceRevisionId)' == ''">
+        <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true" ContinueOnError="true" IgnoreExitCode="true"
+              StandardOutputImportance="low" StandardErrorImportance="low" EchoOff="true">
+            <Output TaskParameter="ConsoleOutput" PropertyName="WalisGitRevision"/>
+            <Output TaskParameter="ExitCode" PropertyName="WalisGitExitCode"/>
+        </Exec>
+        <Exec Command="git rev-list --count HEAD" ConsoleToMSBuild="true" ContinueOnError="true" IgnoreExitCode="true"
+              StandardOutputImportance="low" StandardErrorImportance="low" EchoOff="true">
+            <Output TaskParameter="ConsoleOutput" PropertyName="WalisGitCommitCount"/>
+            <Output TaskParameter="ExitCode" PropertyName="WalisGitCountExitCode"/>
+        </Exec>
+        <PropertyGroup Condition="'$(WalisGitExitCode)' == '0' And '$(WalisGitRevision)' != ''">
+            <SourceRevisionId>$(WalisGitRevision)</SourceRevisionId>
+        </PropertyGroup>
+        <PropertyGroup>
+            <WalisPatch Condition="'$(WalisGitCountExitCode)' == '0' And '$(WalisGitCommitCount)' != ''">$(WalisGitCommitCount)</WalisPatch>
+            <WalisPatch Condition="'$(WalisPatch)' == ''">0</WalisPatch>
+            <Version>$(VersionPrefix).$(WalisPatch)</Version>
+            <AssemblyVersion>$(Version)</AssemblyVersion>
+            <FileVersion>$(Version)</FileVersion>
+            <!-- InformationalVersion is left to the SDK, which appends +SourceRevisionId itself. -->
+        </PropertyGroup>
+    </Target>
+
+    <ItemGroup>
+        <PackageReference Include="Anthropic" Version="12.44.0"/>
+        <PackageReference Include="Dapper" Version="2.1.79"/>
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.13"/>
+        <!-- The native SQLite build is pinned separately from Microsoft.Data.Sqlite. 2.1.14 carries SQLite 3.54.0, whose 32-bit heap overflow (fixed in 3.54.1) would reach the linux-arm build; 2.1.13 still carries 3.53.3 and satisfies Microsoft.Data.Sqlite 10.0.13; move on once a 3.54.1 bundle exists. -->
+        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.13"/>
+        <PackageReference Include="ModelContextProtocol.AspNetCore" Version="2.2.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Walis.Core\Walis.Core.csproj"/>
+    </ItemGroup>
+
+</Project>

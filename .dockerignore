@@ -1,0 +1,19 @@
+# Build context for source/Dockerfile is the repository root (so global.json, nuget.config and Directory.Build.props are
+# available to the restore); the API image needs only the files listed in that Dockerfile.
+**/bin
+**/obj
+**/node_modules
+**/dist
+**/data
+.git
+.idea
+.claude
+dist
+docs
+internal
+deploy
+source/Walis.Admin
+source/Walis.Runner
+source/Walis.Tests
+source/Walis.Mcp
+source/walis-plugin-sdk

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/source/">
+    <Project Path="source/Walis.Api/Walis.Api.csproj" />
+    <Project Path="source/Walis.Core/Walis.Core.csproj" />
+    <Project Path="source/Walis.Mcp/Walis.Mcp.csproj" />
+    <Project Path="source/Walis.Runner/Walis.Runner.csproj" />
+    <Project Path="source/Walis.Tests/Walis.Tests.csproj" />
+  </Folder>
+</Solution>
