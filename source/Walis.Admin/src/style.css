@@ -1,0 +1,108 @@
+/*
+ * Layout rules transcribed from src/scss/style.scss of the CoreUI Free Bootstrap Admin Template,
+ * so the admin UI's frame matches the official template.
+ */
+
+body {
+  background-color: var(--cui-tertiary-bg);
+}
+
+.wrapper {
+  width: 100%;
+  padding-inline: var(--cui-sidebar-occupy-start, 0) var(--cui-sidebar-occupy-end, 0);
+  will-change: auto;
+  transition: padding .15s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper {
+    transition: none;
+  }
+}
+
+.header > .container-fluid,
+.sidebar-header {
+  min-height: calc(4rem + 1px);
+}
+
+.sidebar-brand-full {
+  margin-left: 3px;
+}
+
+.sidebar-toggler {
+  margin-inline-start: auto;
+}
+
+.sidebar-narrow .sidebar-toggler,
+.sidebar-narrow-unfoldable:not(:hover) .sidebar-toggler {
+  margin-inline-end: auto;
+}
+
+.header > .container-fluid + .container-fluid {
+  min-height: 3rem;
+}
+
+.footer {
+  min-height: calc(3rem + 1px);
+}
+
+[data-coreui-theme="dark"] body {
+  background-color: var(--cui-dark-bg-subtle);
+}
+
+[data-coreui-theme="dark"] .footer {
+  --cui-footer-bg: var(--cui-body-bg);
+}
+
+/* The sidebar does not use the native scrollbar (the official template replaces it with simplebar). */
+.sidebar-nav {
+  --cui-sidebar-nav-title-margin-top: 0;
+  --cui-sidebar-nav-title-padding-y: .5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Clickable table rows. */
+.table tbody tr.is-clickable {
+  cursor: pointer;
+}
+
+/* Build output. */
+.build-log {
+  max-height: 26rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* The hamburger button at the top right of the sidebar header. */
+.sidebar-hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--cui-border-radius);
+  background-color: transparent;
+  color: var(--cui-sidebar-nav-link-color);
+  transition: color .15s, background-color .15s;
+}
+
+.sidebar-hamburger:hover,
+.sidebar-hamburger:focus-visible {
+  color: var(--cui-sidebar-nav-link-hover-color);
+  background-color: var(--cui-sidebar-nav-link-hover-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-hamburger {
+    transition: none;
+  }
+}

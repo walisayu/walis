@@ -1,0 +1,13 @@
+**/bin
+**/obj
+**/node_modules
+**/dist
+# A developer's local database, artifacts and setup code must never reach the build context.
+**/data
+**/*.db
+**/*.db-wal
+**/*.db-shm
+**/setup-code.txt
+Walis.Admin
+Walis.Runner
+Walis.Tests

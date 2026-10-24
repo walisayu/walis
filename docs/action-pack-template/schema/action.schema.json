@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://walis.dev/schema/action.schema.json",
+  "title": "Walis action definition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "template"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$",
+      "description": "小寫、至少一個點，例如 team.deploy。檔名必須與 id 相同。"
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "description": { "type": "string", "maxLength": 10000 },
+    "category": {
+      "type": "string",
+      "enum": ["general", "file", "git", "node", "dotnet", "python", "java", "go", "rust", "ruby", "php", "container", "kubernetes", "database", "cloud", "deploy", "check", "test", "security", "notify", "archive"]
+    },
+    "icon": { "type": "string", "maxLength": 200, "description": "CoreUI 圖示名稱，例如 cil-terminal。" },
+    "version": { "type": "string", "maxLength": 64 },
+    "author": { "type": "string", "maxLength": 200 },
+    "parameters": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "label"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$" },
+          "label": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "enum": ["text", "multiline", "number", "boolean", "select", "path"] },
+          "required": { "type": "boolean" },
+          "default": { "type": ["string", "null"] },
+          "placeholder": { "type": ["string", "null"] },
+          "description": { "type": ["string", "null"] },
+          "options": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "required": ["value", "label"],
+              "properties": { "value": { "type": "string" }, "label": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "maxItems": 32,
+      "description": "Outputs the action writes to $WALIS_OUTPUT_FILE; later steps reference them as ${{ steps.<key>.<name> }}.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,63}$" },
+          "description": { "type": "string", "minLength": 1, "maxLength": 1000 }
+        }
+      }
+    },
+    "template": { "type": "string", "minLength": 1, "maxLength": 100000 }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "walis-plugin-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "walis-plugin build",
+    "render": "walis-plugin render",
+    "test": "tsc && node --test dist-test/*.test.js",
+    "install-to-walis": "walis-plugin install"
+  },
+  "devDependencies": {
+    "@walisayu/plugin-sdk": "^1.0.0",
+    "typescript": "~6.0.2",
+    "@types/node": "^26.4.0"
+  }
+}

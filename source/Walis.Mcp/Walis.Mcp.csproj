@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <!-- Published self-contained next to the API (mcp/ in the server archive), so it ships the same runtime as the server. -->
+        <RuntimeIdentifiers>$(WalisReleaseRuntimeIdentifiers)</RuntimeIdentifiers>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11"/>
+        <PackageReference Include="ModelContextProtocol" Version="2.2.0"/>
+    </ItemGroup>
+
+</Project>

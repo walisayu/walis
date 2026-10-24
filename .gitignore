@@ -1,0 +1,23 @@
+.DS_Store
+.env
+data/
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+.codebase-memory/
+
+# Credentials of local services, never committed
+internal/credentials.local.md
+
+# While the self-update built inside the Walis sandbox, HOME used to point at the workspace and dotnet/npm wrote their caches into the repo;
+# update.sh now points HOME outside the repo, so this is only a safeguard.
+/.nuget/
+/.local/
+/.dotnet/
+/.npm/
+/.cache/
+/.config/
+/Library/
+/.walis-shell/
+MEMORY.md
